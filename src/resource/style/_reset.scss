@@ -1,0 +1,236 @@
+@charset "UTF-8";
+// @import 'npm://normalize.css/normalize.css';
+body {
+    width: 100%;
+    font-family: "Helvetica", "Microsoft Yahei";
+    line-height: 1.5;
+    /*-webkit-user-select: none;*/ /* 禁止选中 */
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;/* 移动端取消touch高亮效果 */
+    outline: none;
+}
+html,body{    
+    font-size: .28rem;
+    color:#333;
+    background:#fff;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: "Helvetica", "Microsoft Yahei";
+}
+
+html,
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+a,
+p,
+blockquote,
+table,
+th,
+td,
+header,
+hgroup,
+nav,
+section,
+article,
+aside,
+footer,
+figure,
+figcaption,
+menu,
+button,
+img {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+    list-style-type: none;
+    list-style-image: none;
+    resize: none;
+}
+
+img {
+    border: 0;
+    border: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+img,
+object,
+select,
+input,
+textarea,
+button {
+    vertical-align: middle;
+    box-sizing: content-box;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
+}
+
+abbr[title],
+acronym[title] {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+
+/* user agent stylesheet */
+
+textarea:disabled,
+input:not([type]):disabled,
+input[type="color"]:disabled,
+input[type="date"]:disabled,
+input[type="datetime"]:disabled,
+input[type="datetime-local"]:disabled,
+input[type="email"]:disabled,
+input[type="month"]:disabled,
+input[type="password"]:disabled,
+input[type="number"]:disabled,
+input[type="search"]:disabled,
+input[type="tel"]:disabled,
+input[type="text"]:disabled,
+input[type="time"]:disabled,
+input[type="url"]:disabled,
+input[type="week"]:disabled {
+    background-color: #fff;
+}
+/* 移除iOS上输入框默认有内部阴影 */
+input,
+textarea {
+　　border: 0; 
+　　-webkit-appearance: none; /* 可能引起安卓4.4以下版本checkbox隐藏，解决方案：用div代替checkbox */
+}
+button{
+    cursor: pointer;
+    &[disabled]{        
+        cursor: not-allowed;
+    }
+}
+/*********************************** 公共样式 ***********************************/
+select{
+    -webkit-appearance: none;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    width:100%;
+    height:0.85rem;
+    line-height: 0.85rem;
+    font-size: inherit;
+    position: relative;
+    z-index: 1;
+    padding-right: 0.2rem;
+    direction: rtl;
+}
+.angleBracket {
+    position:relative;
+    &::before {
+        content: "";
+        position: absolute;
+        top:50%;
+        right:0;
+        width:0.15rem;
+        height:0.15rem;
+        border-top:1px solid #ABABAB;
+        border-right:1px solid #ABABAB;
+        transform: rotate(45deg) translateY(-50%);
+        z-index: 10;
+    }  
+
+}
+.btn{
+    display: inline-block;
+    padding: 0 0.2rem;
+    height: 0.3rem;
+    background-color: #29a1f7;
+    border-radius: 0.05rem;  
+    color:#fff;   
+    font-size: 0.2rem;       
+    line-height: 0.3rem;
+    text-align: center;
+    border:0;
+    &.disabled ,&:disabled{
+        background-color: rgba(41,161,247, 0.3);
+    }
+}
+.topBar{    
+    height: 0.74rem;
+    line-height: 0.74rem;
+    background: #fff;
+    font-size: 0.36rem;
+    padding:0 0.2rem;
+    box-sizing: border-box;
+}
+
+/* **************************************** vue动画 **************************************** */ 
+// 参考：https://cn.vuejs.org/v2/api/#transition
+// 参考：https://cn.vuejs.org/v2/guide/transitions.html
+// 渐显渐隐：<transition name="fade">
+.fade-enter-active,.fade-leave-active {
+    transition: all .3s ease;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+// 向右滑动+渐显渐隐：<transition name="slide">
+.slideRight-enter-active,.slideRight-leave-active {
+    transition: all .3s ease;
+}
+.slideRight-enter, .slideRight-leave-to {
+    transform: translateX(100%);
+    opacity: 0;
+}
+// 向左滑动+渐显渐隐：<transition name="slide">
+.slideRight-enter-active,.slideRight-leave-active {
+    transition: all .3s ease;
+}
+.slideRight-enter, .slideRight-leave-to {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+// 向上滑动+渐显渐隐：<transition name="slideUp">
+.slideUp-enter-active,.slideUp-leave-active {
+    transition: transform 0.3s;
+}
+.slideUp-enter, .slideUp-leave-to {
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+

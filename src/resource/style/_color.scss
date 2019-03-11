@@ -1,0 +1,82 @@
+
+/**************************** 文本颜色 ****************************/ 
+.f_l{color:$l;}
+.f_m{color:$m;}
+.f_s{color:$s;}
+
+/**************************** 黑白灰 ****************************/ 
+.f_black,.f_000 {color:$black;}
+.f_white,.f_fff {color:$white;}
+.f_lightGray {color:$lightGray;}
+.f_gray {color:$gray;}
+.f_darkgray {color:$darkgray;}
+
+/**************************** red：红 ****************************/
+.f_red {color:$red;}
+
+/**************************** green：绿 ****************************/
+.f_green {color:$green;}
+.f_darkGreen {color:$darkGreen;}
+
+/**************************** blue：蓝 ****************************/
+.f_blue {color:$blue;}
+
+.f_sky {color:$sky;}
+
+/**************************** orange：橘 ****************************/ 
+.f_orange {color:$orange;}
+
+
+/**************************** yellow：黄 ****************************/ 
+.f_yellow {color:$yellow;}
+
+/**************************** repeat ****************************/ 
+.f_aaa {color:$aaa;}
+.f_bbb {color:$bbb;}
+.f_ccc {color:$ccc;}
+.f_ddd {color:$ddd;}
+.f_eee {color:$eee;}
+.f_fff {color:$fff;}
+.f_000 {color:$c000;}
+.f_111 {color:$c111;}
+.f_222 {color:$c222;}
+.f_333 {color:$c333;}
+.f_444 {color:$c444;}
+.f_555 {color:$c555;}
+.f_666 {color:$c666;}
+.f_777 {color:$c777;}
+.f_888 {color:$c888;}
+.f_999 {color:$c999;}
+/**************************** simple ****************************/ 
+.f_40 {color:$c40;}
+.f_75 {color:$c75;}
+
+/*背景颜色*/
+.bg_white,.bg_fff {background-color:$white;}
+.bg_body,.bg_f5 {background-color:$cf5;}
+.bg_wx {background-color:$wx;color:#fff;}/*微信黑*/
+.bg_wx_ios {background-color:$wx_ios;color:#fff;}/*微信黑*/
+.bg_lightGray {background-color:$lightGray;}/*灰色*/
+.bg_gray {background-color:$gray;}/*灰色*/
+.bg_darkgray {background-color:$darkgray;}/*深灰色*/
+.bg_disabled {background-color:$c9a;cursor: not-allowed !important;}/*禁止点击*/
+.bg_black,.bg_000 {background-color:$black;}/*黑色*/
+.bg_orange {background-color:$orange;}
+.bg_yellow {background-color:$yellow;}
+.bg_blue {background-color:$blue;}
+.bg_sky {background-color:$sky;}
+.bg_green {background-color:$green;}
+.bg_red {background-color:$red;}
+.noBg {background:transparent;}
+
+/* 边框相关 */
+
+/* 提示文字 */
+.placeholder{
+	&::-webkit-input-placeholder{
+		color: #dedede;
+	}
+}
+::-webkit-input-placeholder{
+	color: #dedede;
+}

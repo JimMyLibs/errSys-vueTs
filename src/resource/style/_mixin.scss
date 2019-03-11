@@ -1,0 +1,115 @@
+/************************************** font-size **************************************/
+@mixin fontSize($min,$max,$unit,$num:0){
+	@for $i from $min through $max {
+		@if $unit == rem {
+			$num : $i/100	
+		}	
+		.f#{$i} {font-size: $num+$unit;}
+	}	
+}
+/**************************** margin | padding ****************************/
+@mixin margin($size,$unit,$num:0){
+	@each $i in $size {
+		@if $unit == rem {
+			$num : $i/100	
+		}	
+		.mg_#{$i} {margin: $num+$unit;}
+		.mg_l_#{$i} {margin-left: $num+$unit;}		
+		.mg_r_#{$i} {margin-right: $num+$unit;}		
+		.mg_t_#{$i} {margin-top: $num+$unit;}		
+		.mg_b_#{$i} {margin-bottom: $num+$unit;}		
+	}
+}
+@mixin padding($size,$unit,$num:0){
+	@each $i in $size {
+		@if $unit == rem {
+			$num : $i/100	
+		}	
+		.pd_#{$i} {padding: $num+$unit;}
+		.pd_l_#{$i} {padding-left: $num+$unit;}		
+		.pd_r_#{$i} {padding-right: $num+$unit;}		
+		.pd_t_#{$i} {padding-top: $num+$unit;}		
+		.pd_b_#{$i} {padding-bottom: $num+$unit;}		
+	}
+}
+/**************************** before||after——边框0.5px ****************************/
+@mixin halfBorder($className, $direction:top, $size:1px, $bg:#ddd, $fb:before) {
+	.#{$className}{
+		position: relative;		
+		&.noLast{
+			&:last-child{
+				&:#{$fb}{
+					content: none;
+				}
+			}
+		}
+		&.noFirst{
+			&:first-child{
+				&:#{$fb}{
+					content: none;
+				}
+			}
+		}
+	}
+	.#{$className}:#{$fb}{
+		content: " ";
+		//z-index: 1;
+	    position: absolute;
+	    border: 0;
+	    background: $bg;
+	    #{$direction}: 0;	    
+	    @if $direction == all {
+		    left: 0;
+		    right: 0;	
+	    	height: $size; 
+		    transform-origin: 0 0;
+		    transform: scaleY(0.5);
+	    } @else if $direction == top {
+		    left: 0;
+		    right: 0;	
+	    	height: $size; 
+		    transform-origin: 0 0;
+		    transform: scaleY(0.5);   	
+	    } @else if $direction == bottom {
+		    left: 0;
+		    right: 0;	
+	    	height: $size; 
+		    transform-origin: 0 100%;
+		    transform: scaleY(0.5);   	
+	    } @else if $direction == left {
+		    top: 0;
+		    bottom: 0;	
+	    	width: $size; 
+		    transform-origin: 0 0;
+		    transform: scaleX(0.5);   	
+	    } @else if $direction == right {
+		    top: 0;
+		    bottom: 0;	
+	    	width: $size; 
+		    transform-origin: 100% 0;
+		    transform: scaleX(0.5);   	
+		}
+	};
+	.#{$className}{
+		&.top15{ 
+			&:#{$fb}{
+				top:0.38rem;
+			}
+		}
+		&.bottom15{ 
+			&:#{$fb}{
+				bottom:0.38rem;
+			}
+		}
+		&.left15{ 
+			&:#{$fb}{
+				left:0.38rem;
+			}
+		}
+		&.right15{ 
+			&:#{$fb}{
+				right:0.38rem;
+			}
+		}
+	}
+}

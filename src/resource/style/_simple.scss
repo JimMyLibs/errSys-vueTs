@@ -1,0 +1,241 @@
+
+/**************************** 字体大小 ****************************/
+    @include fontSize(12,100,rem);
+/**************************** margin | padding ****************************/
+    @include margin((0,5,10,15,20),rem);
+    @include padding((0,5,10,15,20),rem);
+/************************************** 0.5px的边框 **************************************/
+/**************************** position—0.5px的边框，className:pb_t_d_b; ****************************/
+    @include halfBorder(hb_t_c_b,top,1px,#dedede,before);
+    @include halfBorder(hb_b_c_b,bottom,1px,#dedede,before);
+    @include halfBorder(hb_l_c_b,left,1px,#dedede,before);
+    @include halfBorder(hb_r_c_b,right,1px,#dedede,before);
+    .noAfter:after, .noBefore:before {
+      display: none;
+      content: none;
+    }
+/**************************** 文字对齐方式 ****************************/
+    .text-left {text-align: left;}
+    .text-right {text-align: right;}
+    .text-center {text-align: center;}
+    .text-top {vertical-align: top;}
+    .text-bottom {vertical-align: bottom;}
+    .text-middle {vertical-align: middle;}
+    .text-sub {vertical-align: sub;}
+
+/**************************** display| ****************************/
+    .show {display: block;}
+    .inlineBlock{display: inline-block;}
+    .hide {display:none;}
+    .clear {clear: both;}
+    .visible{visibility: visible;}
+    .hidden{visibility: hidden;}
+    .collapse{visibility: collapse;}
+    .bottom0{bottom:0}
+
+/**************************** 蒙版 ****************************/
+    .wh100 {
+        width: 100%;
+        height: 100%;
+    }
+    .w100 {
+        width: 100%;
+    }
+    .h100 {
+        width: 100%;
+    }
+    .mask{
+        position:fixed;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        z-index: 1000;
+    }
+    .mask65{
+        background:rgba($color: #000000, $alpha: 0.65);
+    }
+
+
+/************************************** X行超出隐藏 **************************************/
+    // 多行输入textarea
+    .noResize{// 用户无法输入框的尺寸。
+        resize:none;
+    }
+    .overhide{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .overhide2{
+        overflow : hidden;
+        white-space: normal;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    .overhide3{
+        overflow : hidden;
+        white-space: normal;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+    .overhide4{
+        overflow : hidden;
+        white-space: normal;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+    }
+    /* loading:来自weui-loading */
+    .weui-loading {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        vertical-align: middle;
+        animation: weuiLoading 1s steps(12, end) infinite;
+        background: transparent url("data:image/svg+xml;charset=utf8, %3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'%3E%3Cpath fill='none' d='M0 0h100v100H0z'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23E9E9E9' rx='5' ry='5' transform='translate(0 -30)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23989697' rx='5' ry='5' transform='rotate(30 105.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%239B999A' rx='5' ry='5' transform='rotate(60 75.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23A3A1A2' rx='5' ry='5' transform='rotate(90 65 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23ABA9AA' rx='5' ry='5' transform='rotate(120 58.66 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23B2B2B2' rx='5' ry='5' transform='rotate(150 54.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23BAB8B9' rx='5' ry='5' transform='rotate(180 50 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23C2C0C1' rx='5' ry='5' transform='rotate(-150 45.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23CBCBCB' rx='5' ry='5' transform='rotate(-120 41.34 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23D2D2D2' rx='5' ry='5' transform='rotate(-90 35 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23DADADA' rx='5' ry='5' transform='rotate(-60 24.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23E2E2E2' rx='5' ry='5' transform='rotate(-30 -5.98 65)'/%3E%3C/svg%3E") no-repeat;
+        background-size: 100%;
+        &.loading_transparent,
+        .btn_loading &
+        {
+            background-image: url("data:image/svg+xml;charset=utf8, %3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'%3E%3Cpath fill='none' d='M0 0h100v100H0z'/%3E%3Crect xmlns='http://www.w3.org/2000/svg' width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.56)' rx='5' ry='5' transform='translate(0 -30)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.5)' rx='5' ry='5' transform='rotate(30 105.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.43)' rx='5' ry='5' transform='rotate(60 75.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.38)' rx='5' ry='5' transform='rotate(90 65 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.32)' rx='5' ry='5' transform='rotate(120 58.66 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.28)' rx='5' ry='5' transform='rotate(150 54.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.25)' rx='5' ry='5' transform='rotate(180 50 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.2)' rx='5' ry='5' transform='rotate(-150 45.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.17)' rx='5' ry='5' transform='rotate(-120 41.34 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.14)' rx='5' ry='5' transform='rotate(-90 35 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.1)' rx='5' ry='5' transform='rotate(-60 24.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.03)' rx='5' ry='5' transform='rotate(-30 -5.98 65)'/%3E%3C/svg%3E");
+        }
+    }
+
+/************************************** flex弹性布局 **************************************/
+    // 设为 Flex 布局以后，子元素的float、clear和vertical-align属性将失效。
+    .flex{display: flex;}
+    .flex-center {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .flex-wrap{flex-wrap:wrap;}
+    .inline-flex{display: inline-flex;}
+    .flex1,.flex-item{flex: 1}// flex: 0 1 auto;// 是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。
+    .flex2{flex: 2}
+    .flex3{flex: 3}
+    .flex4{flex: 4}
+    .flex5{flex: 5}
+    .flex{  // 三、容器的属性  
+        // 3.1 flex-direction :决定主轴的方向（即项目的排列方向）
+        &.row{// （默认值）主轴为水平方向，起点在左端。
+          flex-direction: row;
+        }
+        &.row-reverse{// 主轴为水平方向，起点在右端。
+          flex-direction: row-reverse;
+        }
+        &.column{// 主轴为垂直方向，起点在上沿。
+          flex-direction: column;
+        }
+        &.column-reverse{// 主轴为垂直方向，起点在下沿。
+          flex-direction: column-reverse;
+        } 
+        // 3.2 flex-wrap属性:换行
+        &.nowrap{// （默认）不换行。
+            flex-wrap: nowrap;
+        }
+        &.wrap{// 换行，第一行在上方。
+            flex-wrap: wrap;
+        }
+        &.wrap-reverse{// 换行，第一行在下方。
+            flex-wrap: wrap-reverse;
+        }      
+        // 3.3 flex-flow:是 flex-direction 属性和 flex-wrap 属性的简写形式，默认值为 row nowrap。
+        &.row-nowrap{
+            flex-flow: row nowrap;
+        } 
+        // 3.4 justify-content: 项目在主轴上的对齐方式。
+        &.justify-start{// (默认值)左对齐
+            justify-content: flex-start;
+        }
+        &.justify-end{// 右对齐
+            justify-content: flex-end;
+        }
+        &.justify-center{// 居中
+            justify-content: center;
+        } 
+        &.justify-between{// 两端对齐，项目之间的间隔都相等。
+            justify-content: space-between;
+        }
+        &.justify-around{// 每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
+            justify-content: space-around;
+        } 
+        // 3.5 align-items: 项目在交叉轴上的对齐方式。
+        &.items-start{// 交叉轴的起点对齐。
+            align-items: flex-start;
+        }
+        &.items-end{// 交叉轴的终点对齐。
+            align-items: flex-end;
+        }
+        &.items-center{// 交叉轴的中点对齐。
+            align-items: center;
+        }
+        &.items-baseline{// 项目的第一行文字的基线对齐。
+            align-items: baseline;
+        }
+        &.items-stretch{// （默认值）如果项目未设置高度或设为auto，将占满整个容器的高度。
+            align-items: stretch;
+        }
+        // 3.6 align-content: 多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。
+        &.content-start{// 与交叉轴的起点对齐。
+            align-content: flex-start;
+        }
+        &.content-end{// 与交叉轴的终点对齐。
+            align-content: flex-end;
+        }
+        &.content-center{// 与交叉轴的中点对齐。
+            align-content: center;
+        }
+        &.content-between{// 与交叉轴两端对齐，轴线之间的间隔平均分布。
+            align-content: space-between;
+        }
+        &.content-around{// 每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。
+            align-content: space-around;
+        }
+        &.content-stretch{// （默认值）轴线占满整个交叉轴。
+            align-content: stretch;
+        }
+        // 项目的属性            
+        .item-order{// 项目的排列顺序。数值越小，排列越靠前，默认为0。
+            order: 0;
+        }
+        .item-grow{// 项目的放大比例，默认为0，即如果存在剩余空间，也不放大。
+            // 如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。
+            flex-grow: 0;
+        }
+        .item-shrink{// 项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。
+            //如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。负值对该属性无效。
+            flex-shrink: 1;
+        }
+        .item-basis{// 在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。
+            //它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。
+            flex-basis: auto;
+        }
+        .item-flex{// 是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。
+            flex: 0 1 auto;
+        }
+        .item-self{// 允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。
+            align-self: auto;
+        }
+        .item-start{// 交叉轴的起点对齐。
+            align-self: flex-start;
+        }
+        .item-end{// 交叉轴的终点对齐。
+            align-self: flex-end;
+        }
+        .item-center{// 交叉轴的中点对齐。
+            align-self: center;
+        }
+        .item-baseline{// 项目的第一行文字的基线对齐。
+            align-self: baseline;
+        }
+        .item-stretch{// （默认值）如果项目未设置高度或设为auto，将占满整个容器的高度。
+            align-self: stretch;
+        }
+    }
