@@ -5,29 +5,34 @@
             <input id="projectName" type="text" v-model="findForm.projectName">
             <label for="phone">手机号：</label>
             <input id="phone" type="text" v-model="findForm.phone">
-            <label for="date">日期：</label>
-            <input id="date" type="date" v-model="findForm.date">
+            <label for="dateTime">日期：</label>
+            <input id="dateTime" type="dateTime" v-model="findForm.date">
             <label for="errMsg">错误信息：</label>
             <input id="errMsg" type="text" v-model="findForm.errMsg">
             <button class="btn" @click="getLogs">查询</button>
+            <button class="btn mg_l_20" @click="setLogs">保存</button>
         </div>
         <div class="index_bd pd_10">
-            <table class="logs_table text-center">
+            <table class="logs_table text-center" border>
                 <thead>
                     <tr>
-                        <th>序号</th>
-                        <th>项目名称</th>
-                        <th>手机号</th>
-                        <th>时间</th>
+                        <th style="width: 0.6rem;">序号</th>
+                        <!-- <th style="width: 0.9rem;">项目名称</th> -->
+                        <!-- <th style="width: 0.7rem;">手机号</th> -->
+                        <th style="width: 1.6rem;">时间</th>
+                        <th style="width: 1.6rem;">系统</th>
+                        <th style="width: 1.6rem;">浏览器</th>
                         <th>错误信息</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(item,index) in logs" :key="index">
                         <td>{{index+1}}</td>
-                        <td>{{item.projectName}}</td>
-                        <td>{{item.phone}}</td>
+                        <!-- <td>{{item.projectName}}</td> -->
+                        <!-- <td>{{item.phone}}</td> -->
                         <td>{{item.dateTime | dateFormat}}</td>
+                        <td>{{item.os}}{{item.os_version}}</td>
+                        <td>{{item.browser}}{{item.browser_version}}</td>
                         <td>{{item.errMsg}}</td>
                     </tr>
                 </tbody>
@@ -38,11 +43,14 @@
 
 <script lang="ts">
 import { Vue, Component, Mixins } from "vue-property-decorator";
+import {getBrowserInfo, getOs} from '../resource/js/env'
+const {os, version: os_version} = getOs()
+const {browser, version: browser_version} = getBrowserInfo()
 
 @Component({
     components: {},
     filters: {
-        dateFormat(value: string | number, fmt = 'yyyy-MM-dd') {
+        dateFormat(value: string | number, fmt = 'yyyy-MM-dd hh:ss') {
             const date: Date = new Date(value);
             let o: any = {
                 "M+": date.getMonth() + 1, //月份 
@@ -77,24 +85,55 @@ export default class Pages_index extends Mixins() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ data: this.findForm })
-        })
-            .then(data => {
-                // in some SAMSUNG mobile data.ok is undefined so add data.status
-                if (data.ok || data.status === 200) {
-                    return data.json();
-                } else {
-                    // 未正常返回数据，则抛出异常
-                    throw new Error(`响应数据异常，错误码：${data.status}`);
+            body: JSON.stringify({ 
+                data: {
+                    ...this.findForm
                 }
             })
-            .then(data => {
-                this.logs = data.data.logs;
-                return data;
+        }).then(data => {
+            // in some SAMSUNG mobile data.ok is undefined so add data.status
+            if (data.ok || data.status === 200) {
+                return data.json();
+            } else {
+                // 未正常返回数据，则抛出异常
+                throw new Error(`响应数据异常，错误码：${data.status}`);
+            }
+        })
+        .then(data => {
+            this.logs = data.data.logs;
+            return data;
+        })
+        .catch(function(e) {
+            console.log("fetch fail", JSON.stringify(e));
+        });
+    }
+    setLogs(): void {
+        fetch("http://172.21.0.21:3101/save", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                data: {
+                    ...this.findForm,
+                    os, os_version,browser, browser_version
+                }
             })
-            .catch(function(e) {
-                console.log("fetch fail", JSON.stringify(e));
-            });
+        }).then(data => {
+            // in some SAMSUNG mobile data.ok is undefined so add data.status
+            if (data.ok || data.status === 200) {
+                return data.json();
+            } else {
+                // 未正常返回数据，则抛出异常
+                throw new Error(`响应数据异常，错误码：${data.status}`);
+            }
+        })
+        .then(data => {
+            console.log('保存成功');
+        })
+        .catch(function(e) {
+            console.log("fetch fail", JSON.stringify(e));
+        });
     }
 }
 </script>
@@ -111,7 +150,9 @@ export default class Pages_index extends Mixins() {
     }
     .index_bd {
         .logs_table {
+            font-size: 0.16rem;
             tr {
+                vertical-align: top;
                 th {
                     padding: 0.05rem 0.1rem;
                 }
