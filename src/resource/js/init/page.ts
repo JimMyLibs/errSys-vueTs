@@ -1,14 +1,14 @@
 
-const maxWidth = 750
+const maxWidth: number = 750
 
-function setFontSize() {
-  let htmlEle = document.querySelector('html')
-  let docWidth = document.documentElement.clientWidth
-  let realWidth = docWidth > maxWidth ? maxWidth : docWidth
+function setFontSize(): void {
+  let htmlEle: any = document.querySelector('html')
+  let docWidth: any = document.documentElement.clientWidth
+  let realWidth: any = docWidth > maxWidth ? maxWidth : docWidth
   htmlEle.style.fontSize = realWidth / 7.5 + 'px'
 }
 
-function setRem() {
+function setRem(): void {
   setFontSize()
   window.addEventListener('resize', setFontSize, false)
 }
