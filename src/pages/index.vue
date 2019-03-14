@@ -3,12 +3,16 @@
         <div class="index_hd">
             <label for="project_id">项目名称：</label>
             <input id="project_id" type="text" v-model="findForm.project_id">
+            <label for="project_id">事件名称：</label>
+            <input id="project_id" type="text" v-model="findForm.event_id">
             <label for="phone">手机号：</label>
             <input id="phone" type="text" v-model="findForm.phone">
             <label for="reachTime">日期：</label>
-            <input id="reachTime" type="date" v-model="findForm.date">
+            <input id="reachTime" type="date" v-model="findForm.reachTime">
             <label for="remark">备注信息：</label>
             <input id="remark" type="text" v-model="findForm.remark">
+        </div>
+        <div class="submit mg_t_20 text-center">
             <button class="btn" @click="getLogs">查询</button>
             <button class="btn mg_l_20" @click="setLogs">保存</button>
         </div>
@@ -17,9 +21,10 @@
                 <thead>
                     <tr>
                         <th style="width: 0.6rem;">序号</th>
-                        <!-- <th style="width: 0.9rem;">项目名称</th> -->
-                        <!-- <th style="width: 0.7rem;">手机号</th> -->
-                        <th style="width: 1.6rem;">时间</th>
+                        <th>项目名称</th>
+                        <th>事件名称</th>
+                        <th>渠道</th>
+                        <th style="width: 1.8rem;">时间</th>
                         <th style="width: 1.6rem;">系统</th>
                         <th style="width: 1.6rem;">浏览器</th>
                         <th>备注信息</th>
@@ -28,9 +33,10 @@
                 <tbody>
                     <tr v-for="(item,index) in logs" :key="index">
                         <td>{{index+1}}</td>
-                        <!-- <td>{{item.project_id}}</td> -->
-                        <!-- <td>{{item.phone}}</td> -->
-                        <td>{{item.reachTime | dateFormat}}</td>
+                        <td>{{item.project_id}}</td>
+                        <td>{{item.event_id}}</td>
+                        <td>{{item.channel}}</td>
+                        <td>{{item.time | dateFormat}}</td>
                         <td>{{item.os}}{{item.os_version}}</td>
                         <td>{{item.browser_brand}}{{item.browser_version}}</td>
                         <td>{{item.remark}}</td>
@@ -48,41 +54,49 @@
 import { Vue, Component, Mixins } from "vue-property-decorator";
 import {getBrowserInfo, getOs} from '../resource/js/env'
 const {os, version: os_version} = getOs()
-const {browser_brand, version: browser_version} = getBrowserInfo()
+const {browser:browser_brand, version:browser_version} = getBrowserInfo()
 
 @Component({
     components: {},
     filters: {
-        dateFormat(value: string | number, fmt = 'yyyy-MM-dd hh:ss') {
-            const date: Date = new Date(value);
-            let o: any = {
-                "M+": date.getMonth() + 1, //月份 
-                "d+": date.getDate(), //日 
-                "w+" : date.getDay(), //week
-                "h+": date.getHours(), //小时 
-                "m+": date.getMinutes(), //分 
-                "s+": date.getSeconds(), //秒 
-                "q+": Math.floor((date.getMonth() + 3) / 3), //季度 
-                "S": date.getMilliseconds() //毫秒 
-            };
-            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (let k in o)
-            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-            return fmt;
+        dateFormat(value: string | number, fmt = 'yyyy-MM-dd hh:ss S') {
+            if(value.toString().includes('-')){
+                const date: Date = new Date(value);
+                let o: any = {
+                    "M+": date.getMonth() + 1, //月份 
+                    "d+": date.getDate(), //日 
+                    "w+" : date.getDay(), //week
+                    "h+": date.getHours(), //小时 
+                    "m+": date.getMinutes(), //分 
+                    "s+": date.getSeconds(), //秒 
+                    "q+": Math.floor((date.getMonth() + 3) / 3), //季度 
+                    "S": date.getMilliseconds() //毫秒 
+                };
+                if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+                for (let k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return fmt;
+            }else{
+                return value/1000 + ' s';
+            }
         }
     }
 })
 export default class Pages_index extends Mixins() {
     pageName: string = "pages_index";
     findForm = {
-        phone: "13000000001",
-        date: "",
+        phone: "13066847550",
+        reachTime: "",
         project_id: "",
+        event_id: "",
         remark: ""
     };
     logs = [];
     get downloadLogs(): string {
         return '';
+    }
+    mounted(): void {
+        this.getLogs();
     }
     getLogs(): void {
         this.logs = [];
@@ -104,7 +118,18 @@ export default class Pages_index extends Mixins() {
             }
         })
         .then(data => {
-            this.logs = data.data.logs;
+            let tmpLogs = [];
+            data.data.logs.reduce((pre,item,index,arr)=>{
+                tmpLogs.push(item);
+                if(pre.project_id == item.project_id && pre.event_id == item.event_id ){// 同一个项目同一个事件，计算耗时
+                    let nextObj = JSON.parse(JSON.stringify(item));
+                    nextObj.time = new Date(item.time).getTime() - new Date(pre.time).getTime();
+                    nextObj.event_id = item.event_id + ': 耗时'
+                    tmpLogs.push(nextObj);
+                }
+                return item;
+            },{})
+            this.logs = tmpLogs;
             return data;
         })
         .catch(function(e) {
