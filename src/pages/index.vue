@@ -1,18 +1,18 @@
 <template>
     <div class="pages_index bg_fff">
         <div class="index_hd">
-            <label for="projectName">项目名称：</label>
-            <input id="projectName" type="text" v-model="findForm.projectName">
+            <label for="project_id">项目名称：</label>
+            <input id="project_id" type="text" v-model="findForm.project_id">
             <label for="phone">手机号：</label>
             <input id="phone" type="text" v-model="findForm.phone">
-            <label for="dateTime">日期：</label>
-            <input id="dateTime" type="dateTime" v-model="findForm.date">
-            <label for="errMsg">错误信息：</label>
-            <input id="errMsg" type="text" v-model="findForm.errMsg">
+            <label for="reachTime">日期：</label>
+            <input id="reachTime" type="date" v-model="findForm.date">
+            <label for="remark">备注信息：</label>
+            <input id="remark" type="text" v-model="findForm.remark">
             <button class="btn" @click="getLogs">查询</button>
             <button class="btn mg_l_20" @click="setLogs">保存</button>
         </div>
-        <div class="index_bd pd_10">
+        <div class="index_bd">
             <table class="logs_table text-center" border>
                 <thead>
                     <tr>
@@ -22,21 +22,24 @@
                         <th style="width: 1.6rem;">时间</th>
                         <th style="width: 1.6rem;">系统</th>
                         <th style="width: 1.6rem;">浏览器</th>
-                        <th>错误信息</th>
+                        <th>备注信息</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(item,index) in logs" :key="index">
                         <td>{{index+1}}</td>
-                        <!-- <td>{{item.projectName}}</td> -->
+                        <!-- <td>{{item.project_id}}</td> -->
                         <!-- <td>{{item.phone}}</td> -->
-                        <td>{{item.dateTime | dateFormat}}</td>
+                        <td>{{item.reachTime | dateFormat}}</td>
                         <td>{{item.os}}{{item.os_version}}</td>
-                        <td>{{item.browser}}{{item.browser_version}}</td>
-                        <td>{{item.errMsg}}</td>
+                        <td>{{item.browser_brand}}{{item.browser_version}}</td>
+                        <td>{{item.remark}}</td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="index_ft">
+            <a class="btn" :href="downloadLogs">下载日志</a>
         </div>
     </div>
 </template>
@@ -45,7 +48,7 @@
 import { Vue, Component, Mixins } from "vue-property-decorator";
 import {getBrowserInfo, getOs} from '../resource/js/env'
 const {os, version: os_version} = getOs()
-const {browser, version: browser_version} = getBrowserInfo()
+const {browser_brand, version: browser_version} = getBrowserInfo()
 
 @Component({
     components: {},
@@ -74,10 +77,13 @@ export default class Pages_index extends Mixins() {
     findForm = {
         phone: "13000000001",
         date: "",
-        projectName: "",
-        errMsg: ""
+        project_id: "",
+        remark: ""
     };
     logs = [];
+    get downloadLogs(): string {
+        return '';
+    }
     getLogs(): void {
         this.logs = [];
         fetch("http://172.21.0.21:3101/find", {
@@ -86,9 +92,7 @@ export default class Pages_index extends Mixins() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ 
-                data: {
-                    ...this.findForm
-                }
+                ...this.findForm
             })
         }).then(data => {
             // in some SAMSUNG mobile data.ok is undefined so add data.status
@@ -114,10 +118,9 @@ export default class Pages_index extends Mixins() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ 
-                data: {
-                    ...this.findForm,
-                    os, os_version,browser, browser_version
-                }
+                ...this.findForm,
+                os, os_version,browser_brand, browser_version,
+                time: Date.now()
             })
         }).then(data => {
             // in some SAMSUNG mobile data.ok is undefined so add data.status
@@ -149,6 +152,8 @@ export default class Pages_index extends Mixins() {
         }
     }
     .index_bd {
+        min-height: 60vh;
+        padding: 0.2rem 0;
         .logs_table {
             font-size: 0.16rem;
             tr {
