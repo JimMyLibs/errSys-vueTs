@@ -7,8 +7,8 @@
             <input id="project_id" type="text" v-model="findForm.event_id">
             <label for="phone">手机号：</label>
             <input id="phone" type="text" v-model="findForm.phone">
-            <label for="reachTime">日期：</label>
-            <input id="reachTime" type="date" v-model="findForm.reachTime">
+            <label for="time">日期：</label>
+            <input id="time" type="date" v-model="findForm.time">
             <label for="remark">备注信息：</label>
             <input id="remark" type="text" v-model="findForm.remark">
         </div>
@@ -34,9 +34,9 @@
                     <tr v-for="(item,index) in logs" :key="index">
                         <td>{{index+1}}</td>
                         <td>{{item.project_id}}</td>
-                        <td>{{item.event_id}}</td>
+                        <td :class="{'f_red':item.event_id.includes('耗时')}">{{item.event_id}}</td>
                         <td>{{item.channel}}</td>
-                        <td>{{item.time | dateFormat}}</td>
+                        <td :class="{'f_red':item.event_id.includes('耗时')}">{{item.time | dateFormat}}</td>
                         <td>{{item.os}}{{item.os_version}}</td>
                         <td>{{item.browser_brand}}{{item.browser_version}}</td>
                         <td>{{item.remark}}</td>
@@ -86,7 +86,7 @@ export default class Pages_index extends Mixins() {
     pageName: string = "pages_index";
     findForm = {
         phone: "13066847550",
-        reachTime: "",
+        time: "",
         project_id: "",
         event_id: "",
         remark: ""
@@ -121,10 +121,11 @@ export default class Pages_index extends Mixins() {
             let tmpLogs = [];
             data.data.logs.reduce((pre,item,index,arr)=>{
                 tmpLogs.push(item);
-                if(pre.project_id == item.project_id && pre.event_id == item.event_id ){// 同一个项目同一个事件，计算耗时
+                if(pre.project_id == item.project_id && pre.event_id == item.event_id && item.event_id.includes('_time')){// 同一个项目同一个事件，计算耗时
                     let nextObj = JSON.parse(JSON.stringify(item));
                     nextObj.time = new Date(item.time).getTime() - new Date(pre.time).getTime();
-                    nextObj.event_id = item.event_id + ': 耗时'
+                    nextObj.event_id = item.event_id.split('_time')[0] + ': 耗时'
+                    nextObj.remark = '耗时';
                     tmpLogs.push(nextObj);
                 }
                 return item;
