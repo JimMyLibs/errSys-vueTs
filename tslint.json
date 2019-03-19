@@ -1,23 +1,23 @@
 {
-  "defaultSeverity": "warning",
-  "extends": [
-    "tslint:recommended"
-  ],
-  "linterOptions": {
-    "exclude": [
-      "node_modules/**"
-    ]
+  "extends": "tslint-config-standard",
+  "globals": {
+    "require": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "globalReturn": true,
+      "impliedStrict": true,
+      "jsx": false
+    },
+    "sourceType": "module"
   },
   "rules": {
-    "quotemark": [true, "single"],
-    "indent": [true, "spaces", 2],
-    "interface-name": false,
-    "ordered-imports": false,
-    "object-literal-sort-keys": false,
-    "no-consecutive-blank-lines": false,
     "no-trailing-whitespace": false,
+    "quotemark": false,
     "semicolon": false,
     "space-before-function-paren": false,
+    "no-consecutive-blank-lines": false,
     "no-implicit-dependencies": [true, ["comm", "config", "lrz", "vue-awesome-swiper"]],
     "no-submodule-imports": [true, "comm", "config", "lrz", "vue-awesome-swiper"]
   }
