@@ -77,7 +77,7 @@ const {browser:browser_brand, version:browser_version} = getBrowserInfo()
                 if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
                 return fmt;
             }else{
-                return value/1000 + ' s';
+                return parseInt(value.toString())/1000 + ' s';
             }
         }
     }
@@ -107,7 +107,8 @@ export default class Pages_index extends Mixins() {
             },
             body: JSON.stringify({ 
                 ...this.findForm
-            })
+            }),
+            mode: 'cors',
         }).then(data => {
             // in some SAMSUNG mobile data.ok is undefined so add data.status
             if (data.ok || data.status === 200) {

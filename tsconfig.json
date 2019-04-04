@@ -13,7 +13,7 @@
     "moduleResolution": "node",
     "noEmitHelpers": true,
     "noImplicitAny": false,
-    "outDir": "./dist/",
+    "outDir": "dist",
     "pretty": true,
     "removeComments": false,
     "sourceMap": true,
@@ -46,6 +46,7 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",    
+    "tests"
   ]
 }
